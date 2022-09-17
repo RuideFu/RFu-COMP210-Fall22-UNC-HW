@@ -13,11 +13,11 @@ public class Transaction {
 
     // constructor, string format: MM/DD/YY, HH:MM, Category, Price, Quantity, Rating, Duration
     public Transaction(String inputString) {
-        String[] inputs = inputString.replaceAll("\\s", "").split(",");
+        String[] inputs = inputString.split(" ");
         if (inputs.length != 7) {
             throw new IllegalArgumentException("Wrong format of transaction input!");
         }
-        DateTimeFormatter inputPattern = DateTimeFormatter.ofPattern("MM/dd/yy,HH:mm");
+        DateTimeFormatter inputPattern = DateTimeFormatter.ofPattern("M/d/yy,H:mm");
         _dateTime = LocalDateTime.parse(inputs[0] + ","+inputs[1], inputPattern);
         _category = inputs[2];
         _price = Float.parseFloat(inputs[3]);
@@ -30,7 +30,7 @@ public class Transaction {
     }
 
     public String get_date(){
-        DateTimeFormatter datePattern = DateTimeFormatter.ofPattern("MM/dd/yy");
+        DateTimeFormatter datePattern = DateTimeFormatter.ofPattern("M/d/yy");
         return _dateTime.format(datePattern);
     }
 
@@ -40,7 +40,7 @@ public class Transaction {
     }
 
     public String get_dateTime(){
-        DateTimeFormatter dateTimePattern = DateTimeFormatter.ofPattern("MM/dd/yy HH:mm");
+        DateTimeFormatter dateTimePattern = DateTimeFormatter.ofPattern("M/d/yy HH:mm");
         return _dateTime.format(dateTimePattern);
     }
 
