@@ -1,5 +1,6 @@
 package assn02;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -75,5 +76,17 @@ public class Transaction {
         result += "Rating: " + get_rating() + "\n";
         result += "Duration: " + get_duration();
         return result;
+    }
+
+    public String toMinMaxString(){
+        DecimalFormat dfrmt = new DecimalFormat();
+        dfrmt.setMaximumFractionDigits(2);
+        dfrmt.setMinimumFractionDigits(2);
+        String result = "";
+        result += "\t" + "When: " + get_dateTime() + "\n";
+        result += "\t" + "Category: " + get_category() + "\n";
+        result += "\t" + "Price: " + dfrmt.format(get_price()) + "\n";
+        result += "\t" + "Rating: " + dfrmt.format(get_rating());
+        return result.replaceAll(",", "");
     }
 }

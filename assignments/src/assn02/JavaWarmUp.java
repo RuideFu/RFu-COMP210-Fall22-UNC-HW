@@ -21,10 +21,10 @@ public class JavaWarmUp {
         }
 
         System.out.println("Highest per unit sale:");
-        System.out.println(transactions.getMaxUnitSale());
+        System.out.println(transactions.getMaxUnitSale().toMinMaxString());
 
         System.out.println("Lowest per unit sale:");
-        System.out.println(transactions.getMinUnitSale());
+        System.out.println(transactions.getMinUnitSale().toMinMaxString());
 
         System.out.println("Averages by book:");
         System.out.println(transactions.getStatsByCatalogue("book"));
