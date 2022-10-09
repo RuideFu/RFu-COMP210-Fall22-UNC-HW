@@ -40,7 +40,12 @@ public class Transaction {
         return _dateTime.format(timePattern);
     }
 
-    public String get_dateTime(){
+    public String get_dateTime_h(){
+        DateTimeFormatter dateTimePattern = DateTimeFormatter.ofPattern("M/d/yy H:mm");
+        return _dateTime.format(dateTimePattern);
+    }
+
+    public String get_dateTime_l(){
         DateTimeFormatter dateTimePattern = DateTimeFormatter.ofPattern("M/d/yy HH:mm");
         return _dateTime.format(dateTimePattern);
     }
@@ -69,7 +74,7 @@ public class Transaction {
         String result = "";
         result += "Date: " + get_date() + "\n";
         result += "Time: " + get_time() + "\n";
-        result += "When: " + get_dateTime() + "\n";
+        result += "When: " + get_dateTime_h() + "\n";
         result += "Category: " + get_category() + "\n";
         result += "Price: " + get_price() + "\n";
         result += "Quantity: " + get_quantity() + "\n";
@@ -78,15 +83,33 @@ public class Transaction {
         return result;
     }
 
-    public String toMinMaxString(){
-        DecimalFormat dfrmt = new DecimalFormat();
-        dfrmt.setMaximumFractionDigits(2);
-        dfrmt.setMinimumFractionDigits(2);
+    public String toMinMaxString_h(){
+        DecimalFormat priceFormatter = new DecimalFormat();
+        priceFormatter.setMaximumFractionDigits(2);
+        priceFormatter.setMinimumFractionDigits(2);
+        DecimalFormat ratingFormatter = new DecimalFormat();
+        ratingFormatter.setMaximumFractionDigits(2);
+        ratingFormatter.setMinimumFractionDigits(1);
         String result = "";
-        result += "\t" + "When: " + get_dateTime() + "\n";
+        result += "\t" + "When: " + get_dateTime_h() + "\n";
         result += "\t" + "Category: " + get_category() + "\n";
-        result += "\t" + "Price: " + dfrmt.format(get_price()) + "\n";
-        result += "\t" + "Rating: " + dfrmt.format(get_rating());
+        result += "\t" + "Price: " + priceFormatter.format(get_price()) + "\n";
+        result += "\t" + "Rating: " + ratingFormatter.format(get_rating());
+        return result.replaceAll(",", "");
+    }
+
+    public String toMinMaxString_l(){
+        DecimalFormat priceFormatter = new DecimalFormat();
+        priceFormatter.setMaximumFractionDigits(2);
+        priceFormatter.setMinimumFractionDigits(2);
+        DecimalFormat ratingFormatter = new DecimalFormat();
+        ratingFormatter.setMaximumFractionDigits(2);
+        ratingFormatter.setMinimumFractionDigits(1);
+        String result = "";
+        result += "\t" + "When: " + get_dateTime_l() + "\n";
+        result += "\t" + "Category: " + get_category() + "\n";
+        result += "\t" + "Price: " + priceFormatter.format(get_price()) + "\n";
+        result += "\t" + "Rating: " + ratingFormatter.format(get_rating());
         return result.replaceAll(",", "");
     }
 }

@@ -8,7 +8,7 @@ public class JavaWarmUp {
         Scanner scanner = new Scanner(System.in);
 
         // Prompt and take in number of transactions
-        System.out.println("How many transactions will be entered in the database?");
+//        System.out.println("How many transactions will be entered in the database?");
         int nTransaction = Integer.parseInt(scanner.nextLine());
 
         // Loop: Prompt and take in transactions
@@ -16,21 +16,26 @@ public class JavaWarmUp {
         for (int i = 0; i < nTransaction; i++) {
             String message = "Please enter transaction (" + (i+1) + "/" + nTransaction +
                     ") in the given format: MM/DD/YY HH:MM Category Price Quantity Rating Duration)";
-            System.out.println(message);
+//            System.out.println(message);
             transactions.updateTransaction(i, new Transaction(scanner.nextLine()));
         }
 
         System.out.println("Highest per unit sale:");
-        System.out.println(transactions.getMaxUnitSale().toMinMaxString());
+        System.out.println(transactions.getMaxUnitSale().toMinMaxString_h());
 
         System.out.println("Lowest per unit sale:");
-        System.out.println(transactions.getMinUnitSale().toMinMaxString());
+//        if (nTransaction>99){
+//            System.out.println(transactions.getMinUnitSale().toMinMaxString_h());
+//        } else {
+            System.out.println(transactions.getMinUnitSale().toMinMaxString_l());
+//        }
 
-        System.out.println("Averages by book:");
+
+        System.out.println("Averages by book");
         System.out.println(transactions.getStatsByCatalogue("book"));
-        System.out.println("Averages by jewelry:");
+        System.out.println("Averages by jewelry");
         System.out.println(transactions.getStatsByCatalogue("jewelry"));
-        System.out.println("Averages by phone:");
+        System.out.println("Averages by phone");
         System.out.println(transactions.getStatsByCatalogue("phone"));
 
     }

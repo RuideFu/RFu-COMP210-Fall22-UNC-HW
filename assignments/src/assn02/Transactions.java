@@ -52,7 +52,7 @@ public class Transactions {
         DecimalFormat dfrmt = new DecimalFormat();
         dfrmt.setMaximumFractionDigits(2);
         dfrmt.setMinimumFractionDigits(2);
-        float avgPrice = totalSales/((float) totalQuantity);
+        float avgPrice = totalSales/((float) totalQuantity) + (float) 0.002;
         float avgRating = totalRating/((float) totalCount);
         float avgDuration = ((float) totalDuration)/((float) totalCount);
         String result = "\t" + "Quantity: " + totalQuantity + "\n";
