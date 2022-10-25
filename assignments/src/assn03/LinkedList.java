@@ -26,8 +26,32 @@ public class LinkedList<T> {
      * @return true if the lists have the same elements in the same order, false otherwise
      */
     public boolean isEqual(LinkedList list2) {
-
-
+        if (size == 0 || list2.size() == 0){
+            if (size == 0 && list2.size() == 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if (size != list2.size()) {
+            return false;
+        } else {
+            Node currentNode = head;
+            Node currentNodeTwo = list2.getHead();
+            while (true) {
+                if (currentNode.getValue() != currentNodeTwo.getValue()){
+                    return false;
+                } else {
+                    if (currentNode.hasNext()) {
+                        currentNode = currentNode.getNext();
+                        currentNodeTwo = currentNodeTwo.getNext();
+                    } else {
+                        break;
+                    }
+                }
+            }
+            return true;
+        }
     }
 
 
@@ -43,7 +67,15 @@ public class LinkedList<T> {
      */
 
     public boolean isSymmetrical() {
-
+        int index = 0;
+        while (index * 2 < size){
+            if (this.get(index) != this.get(size - index - 1)) {
+                return false;
+            } else {
+                index ++;
+            }
+        }
+        return true;
     }
 
 
@@ -57,7 +89,21 @@ public class LinkedList<T> {
      * @param factor the amount to multiply the number of occurrences of each element by
      */
     public void multiply(int factor) {
-
+        if (factor == 0){
+            this.clear();
+        } else {
+            Node cur = head;
+            while (cur != null) {
+                Node next = cur.getNext();
+                for (int i = 0; i < factor - 1; i++) {
+                    Node temp = new NodeImpl(cur.getValue(), null);
+                    cur.setNext(temp);
+                    cur = temp;
+                }
+                cur.setNext(next);
+                cur = next;
+            }
+        }
     }
 
 
@@ -75,7 +121,18 @@ public class LinkedList<T> {
      * @return true if the list contains a cycle, false otherwise
      */
     public boolean containsCycle() {
-
+        Node cur = head;
+        ArrayList<Node> nodes = new ArrayList<Node>();
+        while (cur != null) {
+            for (int i = 0; i < nodes.size(); i++) {
+                if (nodes.get(i) == cur) {
+                    return true;
+                }
+            }
+            nodes.add(cur);
+            cur = cur.getNext();
+        }
+        return false;
     }
 
     /**
@@ -96,7 +153,27 @@ public class LinkedList<T> {
      * @param list2
      */
     public void merge(LinkedList list2) {
-    
+        int newSize = size + list2.size();
+        LinkedList<T> resultLst = new LinkedList();
+        Node lst1Cur = head;
+        Node lst2Cur = list2.getHead();
+        for (int i = 0; i < newSize; i++) {
+            if (lst2Cur != null) {
+                if (i % 2 == 0) {
+                    resultLst.add(lst1Cur.getValue());
+                    lst1Cur = lst1Cur.getNext();
+                } else {
+                    resultLst.add(lst2Cur.getValue());
+                    lst2Cur = lst2Cur.getNext();
+                }
+            } else {
+                resultLst.add(lst1Cur.getValue());
+                lst1Cur = lst1Cur.getNext();
+            }
+        }
+        this.head = resultLst.getHead();
+        this.tail = resultLst.tail;
+        this.size = resultLst.size();
     }
 
 
