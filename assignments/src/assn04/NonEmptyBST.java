@@ -76,7 +76,7 @@ public class NonEmptyBST<T extends Comparable<T>> implements BST<T> {
 			return left.findMin();
 		}
 	}
-	// TODO: printPreOrderTraversal
+
 	@Override
 	public void printPreOrderTraversal() {
 		System.out.print(this._element.toString() + " ");
@@ -88,7 +88,6 @@ public class NonEmptyBST<T extends Comparable<T>> implements BST<T> {
 		}
 	}
 
-	// TODO: printPostOrderTraversal
 	@Override
 	public void printPostOrderTraversal() {
 		if (!this._left.isEmpty()){
@@ -100,7 +99,6 @@ public class NonEmptyBST<T extends Comparable<T>> implements BST<T> {
 		System.out.print(this._element.toString() + " ");
 	}
 
-	// TODO: printBreadthFirstTraversal
 	@Override
 	public void printBreadthFirstTraversal() {
 		for (int i = 0; i <= this.getHeight(); i++) {
