@@ -1,2 +1,2 @@
-# COMP 210 Workspace (Fall 2022)
-This repository will be used for releasing/completing assignments throughout the semester.
+# COMP 210 Solution (Fall 2022)
+This repository is my personal work for all the homework for this course.
