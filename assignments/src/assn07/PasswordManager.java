@@ -1,57 +1,141 @@
 package assn07;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 public class PasswordManager<K,V> implements Map<K,V> {
-    private static final String MASTER_PASSWORD = "YOUR PASSWORD HERE";
+    private static final String MASTER_PASSWORD = "password123";
     private Account[] _passwords;
 
     public PasswordManager() {
         _passwords = new Account[50];
     }
 
+    private int hashKey(K key){
+        return Math.abs(key.hashCode() % 50);
+//        return key.hashCode() % 50 < 0 ? key.hashCode() % 50 + 50: key.hashCode() % 50;
+    }
 
-    // TODO: put
+
     @Override
-    public void put(K key, V value) { }
+    public void put(K key, V value) {
+        if (key == null || value == null){
+            return ;
+        }
+        int keyIndex = hashKey(key);
+        Account newAccount = new Account(key, value);
+        if (this._passwords[keyIndex] != null) {
+            Account account = this._passwords[keyIndex];
+            while (account != null){
+                if (account.getWebsite().equals(key)){
+                    account.setPassword(value);
+                    return;
+                }
+                account = account.getNext();
+            }
+            newAccount.setNext(this._passwords[keyIndex]);
+        }
+        this._passwords[keyIndex] = newAccount;
+    }
 
-    // TODO: get
+
     @Override
     public V get(K key) {
+        if (key == null){
+            return null;
+        }
+        int keyIndex = hashKey(key);
+        Account account = this._passwords[keyIndex];
+        if (account != null) {
+            while (account != null){
+                if (account.getWebsite().equals(key)){
+                    return (V) account.getPassword();
+                }
+                account = account.getNext();
+            }
+        }
         return null;
     }
 
-    // TODO: size
+
     @Override
     public int size() {
-        return 0;
+        int size = 0;
+        for (int i = 0; i < 50; i++) {
+            Account account = this._passwords[i];
+            if (account != null) {
+                while (account != null){
+                    size++;
+                    account = account.getNext();
+                }
+            }
+        }
+        return size;
     }
 
-    // TODO: keySet
+
     @Override
     public Set<K> keySet() {
-        return null;
+        Set<K> sites = (Set<K>) new HashSet<String>();
+        for (int i = 0; i < 50; i++) {
+            if (this._passwords[i] != null){
+                Account account = this._passwords[i];
+                while (account != null){
+                    sites.add((K) account.getWebsite());
+                    account = account.getNext();
+                }
+            }
+        }
+        return sites;
     }
 
-    // TODO: remove
+
     @Override
     public V remove(K key) {
+        int keyIndex = hashKey(key);
+        Account account = this._passwords[keyIndex];
+        if (account != null){
+            if (account.getWebsite().equals(key)) {
+                this._passwords[keyIndex] = account.getNext();
+                return (V) account.getPassword();
+            }
+            Account nextAccount = account.getNext();
+            while (nextAccount != null) {
+                if (nextAccount.getWebsite().equals(key)){
+                    account.setNext(nextAccount.getNext());
+                    return (V) nextAccount.getPassword();
+                }
+                account = account.getNext();
+                nextAccount = nextAccount.getNext();
+            }
+        }
         return null;
     }
 
-    // TODO: checkDuplicate
+
     @Override
     public List<K> checkDuplicate(V value) {
-        return null;
+        if (value == null){
+            return null;
+        }
+        List<K> sites = new ArrayList<K>();
+        for (int i = 0; i < 50; i++) {
+            if (this._passwords[i] != null){
+                Account account = this._passwords[i];
+                while (account != null){
+                    if (account.getPassword().equals(value)){
+                        sites.add((K) account.getWebsite());
+                    }
+                    account = account.getNext();
+                }
+            }
+        }
+        return sites;
     }
 
-    // TODO: checkMasterPassword
+
     @Override
     public boolean checkMasterPassword(String enteredPassword) {
-        return false;
+        return MASTER_PASSWORD.equals(enteredPassword);
     }
 
     /*
